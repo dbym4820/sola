@@ -1,0 +1,27 @@
+#!/bin/sh
+#|-*- mode:lisp -*-|#
+#|
+exec ros -Q -- $0 "$@"
+|#
+(progn
+  (ros:ensure-asdf)
+  (unless (find-package :sola)
+    (ql:quickload :sola :silent t)))
+
+(defpackage :ros.script.sola
+  (:use :cl :sola))
+(in-package :ros.script.sola)
+
+(defun option-eq (option-arg correct-option-list)
+  (find option-arg correct-option-list :test #'string=))
+
+(defun main (&rest argv)
+  (let ((option-1 (first argv))
+        (option-2 (second argv))
+	(option-3 (third argv)))
+    (cond ((option-eq option-1 '("-title" "--title"))
+    	   (format t "~A" (get-single-column option-3 (get-anime-list "title" option-2))))
+    	  ((option-eq option-1 '("-all" "--all"))
+    	   (format t "~A" (get-anime-list "title" option-2)))
+    	  (t
+    	   (format t "invalid input")))))
