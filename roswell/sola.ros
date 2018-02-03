@@ -20,8 +20,8 @@ exec ros -Q -- $0 "$@"
         (option-2 (second argv))
 	(option-3 (third argv)))
     (cond ((option-eq option-1 '("-title" "--title"))
-    	   (format t "~A" (get-single-column option-3 (get-anime-list "title" option-2))))
+    	   (format t "~{~:A~%~}" (get-single-column option-3 (get-anime-list "title" option-2))))
     	  ((option-eq option-1 '("-all" "--all"))
-    	   (format t "~A" (get-anime-list "title" option-2)))
+    	   (format t "~{~:A~%~}" (get-anime-list "title" option-2)))
     	  (t
     	   (format t "invalid input")))))
