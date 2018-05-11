@@ -3,22 +3,21 @@ sudo: required
 
 env:
   global:
-      - PATH=~/.roswell/bin:$PATH
-        matrix:
-	    - LISP=sbcl-bin
-            - LISP=ccl-bina
+    - PATH=~/.roswell/bin:$PATH
+    - COVERAGE_EXCLUDE=t/
+  matrix:
+    - LISP=sbcl-bin COVERALLS=true
+    - LISP=ccl-bin
+    - LISP=abcl
+    - LISP=clisp
+    - LISP=ecl
+
+matrix:
+  allow_failures:
+    - env: LISP=clisp
 
 install:
   - curl -L https://raw.githubusercontent.com/snmsts/roswell/release/scripts/install-for-ci.sh | sh
-    - ros install prove
-      # Using the latest sola
-        - git clone https://github.com/dbym4820/sola ~/lisp/sola
 
 script:
-   - ros -s prove -e '(or (prove:run :sola-test) (uiop:quit -1))'
-
-notifications:
-  email:
-    recipients: aburatanitomoki@gmail.com
-    on_success: change
-    on_failure: always
+  - run-prove sola-test.asd
