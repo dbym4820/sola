@@ -1,6 +1,6 @@
 # SOLA: Common Lisp ShangriLa Anime API Library
 
-!https://travis-ci.org/dbym4820/sola.svg?branch=master[](https://travis-ci.org/dbym4820/sola.svg?branch=master)
+[![Build Status](https://travis-ci.org/dbym4820/sola.svg?branch=master)](https://travis-ci.org/dbym4820/sola)
 
 ![](./static/run-screen.png)
 

@@ -16,3 +16,9 @@ install:
 
 script:
    - ros -s prove -e '(or (prove:run :sola-test) (uiop:quit -1))'
+
+notifications:
+  email:
+    recipients: aburatanitomoki@gmail.com
+    on_success: change
+    on_failure: always
