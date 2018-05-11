@@ -18,11 +18,12 @@
 			 (when (= 1 (second d)) t))
 		     (sola:get-columns '(title sex) (sola:get-anime-master)))))
 
-;;; タイトルに「ドラ」が入るアニメのタイトル一覧を表示
+;;; タイトルに「ドラ」から始まるアニメのタイトル一覧を表示
 (defun get-dola ()
   (sola:get-columns '(title) 
 		    (sola:get-anime-list :title ".*ドラ.*" :update t)))
 
+;;; タイトルに「冴え」が入るアニメのタイトル一覧を表示
 (defun get-sae ()
   (sola:get-columns '(title) 
 		    (sola:get-anime-list :title ".*冴え.*" :update t)))
