@@ -1,0 +1,18 @@
+language: common-lisp
+sudo: required
+
+env:
+  global:
+      - PATH=~/.roswell/bin:$PATH
+        matrix:
+	    - LISP=sbcl-bin
+            - LISP=ccl-bina
+
+install:
+  - curl -L https://raw.githubusercontent.com/snmsts/roswell/release/scripts/install-for-ci.sh | sh
+    - ros install prove
+      # Using the latest sola
+        - git clone https://github.com/dbym4820/sola ~/lisp/sola
+
+script:
+   - ros -s prove -e '(or (prove:run :sola-test) (uiop:quit -1))'
