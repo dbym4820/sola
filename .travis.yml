@@ -5,7 +5,6 @@ env:
   global:
     - PATH=~/.roswell/bin:$PATH
   matrix:
-    - LISP=sbcl-bin
     - LISP=ccl-bin
 
 install:
