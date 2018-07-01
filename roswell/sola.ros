@@ -11,7 +11,9 @@ exec ros -Q -- $0 "$@"
 (defpackage :ros.script.sola
   (:use :cl :sola)
   (:import-from :uiop
-                :quit))
+                :quit)
+  (:import-from :cl-ppcre
+		:regex-replace-all))
 (in-package :ros.script.sola)
 
 (defun get-comment (resource-name)
