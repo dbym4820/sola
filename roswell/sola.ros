@@ -24,7 +24,7 @@ exec ros -Q -- $0 "$@"
   			 :distinct t
   			 :subject (dbpedia-jp
 				   (cl-ppcre:regex-replace-all "　"
-							       (cl-ppcre:regex-replace-all " " resource-name) "_") "_")
+							       (cl-ppcre:regex-replace-all " " resource-name "_") "_"))
   			 :predicate (rdf-schema "#comment")))
     (caar
      (sola:get-single-key "O"
