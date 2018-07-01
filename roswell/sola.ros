@@ -6,7 +6,7 @@ exec ros -Q -- $0 "$@"
 (progn
   (ros:ensure-asdf)
   (unless (find-package :sola)
-    (ql:quickload '(sola uiop) :silent t)))
+    (ql:quickload '(sola uiop cl-ppcre) :silent t)))
 
 (defpackage :ros.script.sola
   (:use :cl :sola)
@@ -15,12 +15,14 @@ exec ros -Q -- $0 "$@"
 (in-package :ros.script.sola)
 
 (defun get-comment (resource-name)
-  (ignitor:with-prefix (val)
+  (sola:with-prefix (val)
   		       ((dbpedia-jp "http://ja.dbpedia.org/resource/")
   			(rdf-schema "http://www.w3.org/2000/01/rdf-schema"))
   		       ((:select (nil ?p ?o)
   			 :distinct t
-  			 :subject (dbpedia-jp resource-name)
+  			 :subject (dbpedia-jp
+				   (cl-ppcre:regex-replace-all "　"
+							       (cl-ppcre:regex-replace-all " " resource-name) "_") "_")
   			 :predicate (rdf-schema "#comment")))
     (caar
      (sola:get-single-key "O"
