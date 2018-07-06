@@ -126,3 +126,5 @@ Main part of SOLA(Shangrila Anime API)
     (loop for single-anime in anime-info-list
 	  collect (loop for opt-key in key-sym-list
 			collect (cdr (assoc opt-key single-anime))))))
+
+
