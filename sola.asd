@@ -12,9 +12,10 @@
 	       "uiop"
 	       "cl-ppcre"
 	       "dexador"
-	       "jonathan")
+	       "jonathan"
+	       "cl-ignition")
   :serial t
-  :components ((:static-file "README.md")
+  :components ((:static-file "README.md")	       
 	       (:static-file "LICENSE")
 	       (:module "src"
 		:components

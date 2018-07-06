@@ -16,12 +16,21 @@
    		:scan-to-strings)
   (:import-from :jonathan
 		:parse)
+  (:import-from :cl-ignition
+		:with-prefix
+		:get-single-key
+		:request-dbpedia
+		:convert-query)
   (:export :make-request-url
            :set-sola-endpoint
 	   :get-anime-master
 	   :get-anime-list
 	   :get-single-column
-	   :get-columns))
+	   :get-columns
+	   :with-prefix
+           :get-single-key
+	   :request-dbpedia
+           :convert-query))
 (in-package :sola)
 
 ;;; Basic configuration
@@ -117,3 +126,5 @@ Main part of SOLA(Shangrila Anime API)
     (loop for single-anime in anime-info-list
 	  collect (loop for opt-key in key-sym-list
 			collect (cdr (assoc opt-key single-anime))))))
+
+

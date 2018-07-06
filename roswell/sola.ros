@@ -6,13 +6,30 @@ exec ros -Q -- $0 "$@"
 (progn
   (ros:ensure-asdf)
   (unless (find-package :sola)
-    (ql:quickload '(sola uiop) :silent t)))
+    (ql:quickload '(sola uiop cl-ppcre) :silent t)))
 
 (defpackage :ros.script.sola
   (:use :cl :sola)
   (:import-from :uiop
-                :quit))
+                :quit)
+  (:import-from :cl-ppcre
+		:regex-replace-all))
 (in-package :ros.script.sola)
+
+(defun get-comment (resource-name)
+  (sola:with-prefix (val)
+  		       ((dbpedia-jp "http://ja.dbpedia.org/resource/")
+  			(rdf-schema "http://www.w3.org/2000/01/rdf-schema"))
+  		       ((:select (nil ?p ?o)
+  			 :distinct t
+  			 :subject (dbpedia-jp
+				   (cl-ppcre:regex-replace-all "　"
+							       (cl-ppcre:regex-replace-all " " resource-name "_") "_"))
+  			 :predicate (rdf-schema "#comment")))
+    (caar
+     (sola:get-single-key "O"
+			  (sola:request-dbpedia
+			   (sola:convert-query val))))))
 
 (defun option-eq (option-arg correct-option-list)
   (find option-arg correct-option-list :test #'string=))
@@ -23,8 +40,12 @@ exec ros -Q -- $0 "$@"
         (option-2 (second argv))
 	(option-3 (third argv)))
     (cond ((option-eq option-1 '("-title" "--title"))
-    	   (format t "~{~:A~%~}" (get-single-column option-3 (get-anime-list "title" option-2))))
+    	   (format t "~{~:A~%~}"
+		   (get-single-column option-3
+				      (get-anime-list "title" option-2))))
     	  ((option-eq option-1 '("-all" "--all"))
     	   (format t "~{~:A~%~}" (get-anime-list "title" option-2)))
+	  ((option-eq option-1 '("-abstract" "--abstract"))
+    	   (format t "~A~%" (get-comment option-2)))
     	  (t
-    	   (format t "invalid input")))))
+    	   (format t "invalid input~%")))))
