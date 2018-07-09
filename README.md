@@ -158,4 +158,3 @@ CL-USER> (remove-if #'(lambda (d)
 - dexador
 - jonathan
 - uiop
-- alexandria
